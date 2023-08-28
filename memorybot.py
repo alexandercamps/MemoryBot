@@ -53,14 +53,13 @@ def get_text():
         (str): The text entered by the user
     """
     input_text = st.text_input("You: ", st.session_state["input"], key="input", 
-                            placeholder="Your AI assistant here! Ask me anything ...请在这里打字问问题吧", 
+                            placeholder="Your AI assistant is here! Ask me anything... Please type your question here", 
                             on_change=clear_text,    
                             label_visibility='hidden')
     input_text = st.session_state["temp"]
     return input_text
 
-
-    # Define function to start a new chat
+# Define function to start a new chat
 def new_chat():
     """
     Clears session state and starts a new chat.
@@ -96,22 +95,21 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("# About")
     st.markdown(
-       "ChatGPTm is ChatGPT added memory. "
-       "It can do anything you asked and also remember you."
+       "ChatGPTm is ChatGPT with added memory. "
+       "It can do anything you ask and also remember you."
             )
     st.markdown(
        "This tool is a work in progress. "
             )
     st.markdown("---")
-    st.markdown("# 简介")
+    st.markdown("# Introduction")
     st.markdown(
-       "ChatGPTm就是增加了记忆的ChatGPT。 "
-       "你可以在右边的对话框问任何问题。"
+       "ChatGPTm is ChatGPT with added memory. "
+       "You can ask any question in the conversation box on the right."
             )
     st.markdown(
-       "希望给国内没法注册使用ChatGPT的朋友带来方便！"
+       "I hope to provide convenience to friends in China who can't register to use ChatGPT!"
             )
-
     
 # Set up the Streamlit app layout
 st.title("🤖 ChatGPT with Memory 🧠")
@@ -126,13 +124,13 @@ hide_default_format = """
 st.markdown(hide_default_format, unsafe_allow_html=True)
 
 # Let user select version
-st.write("GPT4.0上线了！无需注册就可以体验只有OpenAI付费用户才可以体验的GPT4.0了！")
-version = st.selectbox("Choose ChatGPT version 请选择您想使用的ChatGPT版本", ("3.5", "4.0"))
+st.write("GPT4.0 is now online! You can experience GPT4.0 that only OpenAI paid users can experience without registering!")
+version = st.selectbox("Choose ChatGPT version", ("3.5", "4.0"))
 if version == "3.5":
     # Use GPT-3.5 model
     MODEL = "gpt-3.5-turbo"
 else:
-    # USe GPT-4.0 model
+    # Use GPT-4.0 model
     MODEL = "gpt-4"
     
 # Ask the user to enter their OpenAI API key
@@ -160,9 +158,8 @@ if API_O:
             memory=st.session_state.entity_memory
         )  
 else:
-    st.sidebar.warning('API key required to try this app.The API key is not stored in any form.')
+    st.sidebar.warning('API key required to try this app. The API key is not stored in any form.')
     # st.stop()
-
 
 # Add a button to start a new chat
 #st.sidebar.button("New Chat", on_click = new_chat, type='primary')
@@ -182,10 +179,9 @@ if user_input:
         st.session_state.past.append(user_input)  
         if is_four_digit_number(user_input) :
             st.session_state["balance"] += st.session_state["deposit"]
-            st.session_state.generated.append("谢谢支付，你可以继续使用了") 
+            st.session_state.generated.append("Thank you for paying, you can continue to use it.") 
         else: 
-            st.session_state.generated.append("请用下面的支付码支付¥10后才可以再继续使用。我会再送你¥10元。支付时请记下转账单号的最后4位数字，在上面对话框输入这四位数字") 
-        
+            st.session_state.generated.append("Please scan the payment code below to pay ¥10 before you can continue to use it. I will give you another ¥10. Please remember the last four digits of the transfer order number and enter these four digits in the above conversation box.") 
 
 # Allow to download as well
 download_str = []
@@ -201,7 +197,7 @@ with st.expander("Conversation", expanded=True):
     download_str = '\n'.join(download_str)
     
     if download_str:
-        st.download_button('Download 下载',download_str)
+        st.download_button('Download',download_str)
 
 # Display stored conversation sessions in the sidebar
 for i, sublist in enumerate(st.session_state.stored_session):
@@ -221,13 +217,13 @@ image4 = Image.open("drpang_shipinhao2.jpg")
 
 # Display the image with text on top
 st.write("I have to pay OpenAI API for each of your usage. Please consider donating $5 to keep this service alive! Thank you!")
-st.write("您现在账上的余额是：", round (st.session_state["balance"]*7, 2), "人民币。")
-st.write("我是史丹福机器人庞博士，我提供此应用的初衷是让国内的人也可以体验使用增加了记忆的ChatGPT。我在为你的每次使用支付调用OpenAI API的费用，包括3.5版，请扫码微信或支付宝支付¥10人民币来使用，我会再送你10元，按流量计费。")
-st.write("因为没有你的注册信息，你如果关闭浏览器或这个网页，你的余额会归零，所以使用时尽量不要关闭浏览器或这个页面")
-st.write("长期用户可交¥1688年费（和OpenAI付费用户收费一致），填上你的邮箱，我会发给你专属的小程序，记忆力是这个的10倍。")
-st.write("OpenAI对GPT4.0 API的收费是3.5的20倍，请大家体验时注意。")
-st.write("我在我的《史丹福机器人庞博士》微信视频号也有很多关于ChatGPT和怎样使用ChatGPT魔法的视频，还有怎么使用这个小程序的视频，欢迎白嫖。也有系统的课程《零基础精通掌握ChatGPT魔法6讲》和《ChatGPT和LLM应用编程7讲》给愿意知识付费的同学深入学习。 ")
-st.write("所有已直播的课程在我的视频号主页的直播回放里， 每节课99元，第一节课大家可以免费试听。 如果想购买整套课程，有50%折扣，每个只要299元。可以在我的视频号主页私信我购买，注明ChatGPT魔法课或编程课。两门课都上再优惠100元，只要499元。")
+st.write("Your current balance is:", round (st.session_state["balance"]*7, 2), "RMB.")
+st.write("I am Dr. Pang, the Stanford Robot. My original intention of providing this application is to allow people in China to also experience and use ChatGPT with added memory. I pay for your every use of calling the OpenAI API, including version 3.5. Please use the WeChat or Alipay QR codes below to pay ¥10 to use it. I will give you another ¥10. This is a pay-as-you-go service.")
+st.write("Since I don't have your registration information, if you close the browser or this web page, your balance will be reset to zero, so please do not close the browser or this page while using.")
+st.write("Long-term users can pay a yearly fee of ¥1688 (the same fee as OpenAI paid users). Fill in your email, and I will send you a dedicated applet with ten times the memory. ")
+st.write("OpenAI charges 20 times more for the GPT4.0 API than for 3.5, so please be aware when using.")
+st.write("I have many videos about ChatGPT and how to use ChatGPT magic, and how to use this applet in my WeChat video account 'Stanford Robot Dr. Pang'. There is also a systematic course 'Zero Basic Mastery ChatGPT Magic 6 Lectures' and 'ChatGPT and LLM Application Programming 7 Lectures' for students who are willing to pay for knowledge. ")
+st.write("All the already broadcasted courses are in the live replay of my video account homepage. Each lesson is 99 yuan. The first lesson is free for everyone to try. If you want to purchase the entire course, there is a 50% discount, only 299 yuan per course. You can send me a private message on the homepage of my video account to purchase, and specify ChatGPT Magic Course or Programming Course. If you take both courses, you get an additional discount of 100 yuan, only 499 yuan in total.")
 
 #st.image(img, caption=None, width=200)
 
@@ -236,14 +232,14 @@ col1, col2, col3 = st.columns(3)
 
 # Display the first image in the first column
 with col1:
-    st.image(image1, caption="微信支付", width=200)
+    st.image(image1, caption="WeChat Payment", width=200)
 
 # Display the second image in the second column
 with col2:
-    st.image(image2, caption="支付宝", width=200)
+    st.image(image2, caption="Alipay", width=200)
 
 # Display the third image in the third column
 with col3:
     st.image(image3, caption="PayPal", width=200)
 
-st.image(image4, caption="史丹福机器人庞博士视频号，微信扫码前往", width=200)
+st.image(image4, caption="Stanford Robot Dr. Pang Video Account, scan with WeChat to go", width=200)
